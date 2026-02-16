@@ -10,28 +10,45 @@ data Shape = Circle Float | --representa el radio
             Trapeze Float Float Float --representa base mayor, base menor y altura
             deriving (Show)
 
+instance Eq Shape where
+    s1 == s2 = area s1 == area s2
+
+
 --Funcion que calcula el area de las figuras
 area :: Shape -> Float
-area = undefined
+area (Circle x) = pi * (x**2)
+area (Square x) = x ** 2
+area (Rectangle x y) = x * y
+area (Triangle x) = (sqrt(3)/4) * (x**2)
+area (Trapeze x y z) = ((x+y)*z)/2
+
+
 
 --Funcion que calcula el perimetro de las figuras
 perimeter :: Shape -> Float
-perimeter = undefined
-
+perimeter (Circle x) = pi * x * 2
+perimeter (Square x) = 4 * x
+perimeter (Rectangle x y) = 2*x + 2*y
+perimeter (Triangle x) = 3*x
+perimeter (Trapeze x y z) = x + y + 2*sqrt(z**2 + ((y-x)/2)**2)
 
 --Ejercicio 2 (Les toca arreglar el sinonimo)
-type Point = Shape
+type Point = (Float, Float)
 
 -- Funcion para calcular la distancia entre dos puntos
 distance :: Point -> Point -> Float
-distance = undefined 
+distance (x_1, y_1) (x_2, y_2) = sqrt((x_2 - x_1)**2 + (y_2 - y_1)**2) 
 
 --Funcion para calcular la distancia de un punto al origen
 from0 :: Point -> Float
-from0 = undefined
+from0  x = distance x (0, 0)
 
 --Ejercicio 3
-data Haskellium = Undefined
+data Haskellium = Haskellium {name :: String,
+                              lastName1 :: String,
+                              lastName2 :: String,
+                              location :: Point,
+                              houseShape :: Shape} deriving Show
 
 --Funcion para regresar el hijo de dos Haskelliums dado su nombre
 son :: Haskellium -> Haskellium -> String -> Haskellium
@@ -62,7 +79,7 @@ conjuntoPotencia = undefined
 
 --Implementacion
 
-data OneTwoTree a = Undefinedd
+data OneTwoTree a = Void | Node a (OneTwoTree a) | Branch a (OneTwoTree a) (OneTwoTree a)
 
 --Ejercicio 2
 suma :: OneTwoTree Int -> Int
