@@ -52,20 +52,22 @@ data Haskellium = Haskellium {name :: String,
 
 --Funcion para regresar el hijo de dos Haskelliums dado su nombre
 son :: Haskellium -> Haskellium -> String -> Haskellium
-son = undefined
+son padre madre nombre = Haskellium nombre (lastName1 padre) (lastName1 madre) (location padre) (houseShape padre)
 
 --Funcion para calcular las unidades para construir la casa de un Haskellium
 houseCost :: Haskellium -> Float
-houseCost = undefined
+houseCost haskellium = (2.5 * perimeter (houseShape haskellium)) + area (houseShape haskellium)
 
 --Funcion para calcular el tiempo que le toma a un Haskellium para llegar a su trabajo
 timeToWork :: Haskellium -> Float
-timeToWork = undefined
+timeToWork  haskellium = if from0 (location haskellium) < 300 then from0 (location haskellium) / 30 else from0 (location haskellium) / 70 
 
 --LISTAS Y FUNCIONES
 --Ejercicio 1
 palindromo :: String -> Bool
-palindromo = undefined
+palindromo [] = True
+palindromo [x] = True
+palindromo (x:xs) = if x /= last(xs) then False else palindromo (init xs)
 
 --Ejercicio 2
 myFoldr :: (a -> b -> b) -> b -> [a] -> b
