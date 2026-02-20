@@ -67,15 +67,35 @@ timeToWork  haskellium = if from0 (location haskellium) < 300 then from0 (locati
 palindromo :: String -> Bool
 palindromo [] = True
 palindromo [x] = True
-palindromo (x:xs) = if x /= last(xs) then False else palindromo (init xs)
+palindromo (x:xs) = if x /= ultimo(xs) then False else palindromo (menosUltimo xs)
+
+{-
+Funcion auxiliar ultimo
+Regresa el último elemento de una lista
+Para usar en la función de palíndromo
+-}
+ultimo :: [a] -> a
+ultimo [a] = a
+ultimo (x:xs) = ultimo xs
+
+{-
+funcion auxiliar que regresa la lista sin el último elemento
+Para usar en las llamadas recursivas de la funcion palindromo
+-}
+menosUltimo :: [a] -> [a]
+menosUltimo [] = []
+menosUltimo [x] = []
+menosUltimo (x:xs) = (x:menosUltimo xs)
 
 --Ejercicio 2
 myFoldr :: (a -> b -> b) -> b -> [a] -> b
-myFoldr = undefined
+myFoldr f z [] = z
+myFoldr f z l = myFoldr f ( f (ultimo l) z) (menosUltimo l)
 
 --Ejercicio 3
 conjuntoPotencia :: [a] -> [[a]]
-conjuntoPotencia = undefined
+conjuntoPotencia  [] = [[]]
+conjuntoPotencia (x:xs) = [x:ys | ys <- conjuntoPotencia xs] ++ (conjuntoPotencia xs)
 
 --ARBOLES
 
@@ -85,4 +105,6 @@ data OneTwoTree a = Void | Node a (OneTwoTree a) | Branch a (OneTwoTree a) (OneT
 
 --Ejercicio 2
 suma :: OneTwoTree Int -> Int
-suma = undefined
+suma Void = 0
+suma (Node a t) = a + suma t
+suma (Branch a t_1 t_2) = a + suma t_1 + suma t_2
